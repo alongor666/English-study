@@ -436,10 +436,10 @@
                 <div class="unit-description">游戏时间 - 学习运动和活动</div>
             </div>
             
-            <div class="unit-card" onclick="showComingSoon()">
+            <div class="unit-card" onclick="startUnit(2)">
                 <div class="unit-number">Unit 2</div>
                 <div class="unit-title">Weather</div>
-                <div class="unit-description">天气 - 即将推出</div>
+                <div class="unit-description">天气 - 学习天气词汇</div>
             </div>
             
             <div class="unit-card" onclick="showComingSoon()">
@@ -539,6 +539,26 @@
             ]
         };
 
+        const unit2Data = {
+            words: [
+                { english: 'sunny',  chinese: '晴朗', emoji: '☀️' },
+                { english: 'rainy',  chinese: '下雨', emoji: '🌧️' },
+                { english: 'cloudy', chinese: '多云', emoji: '☁️' },
+                { english: 'windy',  chinese: '刮风', emoji: '🌬️' },
+                { english: 'snowy',  chinese: '下雪', emoji: '❄️' },
+                { english: 'foggy',  chinese: '有雾', emoji: '🌫️' }
+            ],
+            sentences: [
+                "How's the weather?",
+                "It's sunny.",
+                "It's rainy.",
+                "It's windy."
+            ]
+        };
+
+        let currentUnitData = unit1Data;
+        let currentUnitNumber = 1;
+
         // 全局变量
         let currentActivity = 0;
         let currentWordIndex = 0;
@@ -558,14 +578,19 @@
 
         // 开始单元学习
         function startUnit(unitNumber) {
-            if (unitNumber !== 1) {
+            if (unitNumber === 1) {
+                currentUnitData = unit1Data;
+            } else if (unitNumber === 2) {
+                currentUnitData = unit2Data;
+            } else {
                 showComingSoon();
                 return;
             }
-            
+
+            currentUnitNumber = unitNumber;
             document.getElementById('homePage').style.display = 'none';
             document.getElementById('learningPage').style.display = 'block';
-            
+
             currentActivity = 0;
             showActivity();
         }
@@ -620,7 +645,7 @@
 
         // 显示单词卡片
         function showWordCard(index) {
-            const word = unit1Data.words[index];
+            const word = currentUnitData.words[index];
             document.getElementById('wordCardSection').style.display = 'block';
             document.getElementById('wordImage').textContent = word.emoji;
             document.getElementById('wordText').textContent = word.english;
@@ -632,19 +657,19 @@
             document.getElementById('listenExercise').style.display = 'block';
             
             // 随机选择一个单词作为答案
-            const randomIndex = Math.floor(Math.random() * unit1Data.words.length);
-            correctAnswer = unit1Data.words[randomIndex].english;
+            const randomIndex = Math.floor(Math.random() * currentUnitData.words.length);
+            correctAnswer = currentUnitData.words[randomIndex].english;
             currentExerciseType = 'listen';
             
             // 创建选项
             const options = [];
-            options.push(unit1Data.words[randomIndex]);
+            options.push(currentUnitData.words[randomIndex]);
             
             // 添加其他随机选项
             while (options.length < 4) {
-                const randIdx = Math.floor(Math.random() * unit1Data.words.length);
-                if (!options.some(opt => opt.english === unit1Data.words[randIdx].english)) {
-                    options.push(unit1Data.words[randIdx]);
+                const randIdx = Math.floor(Math.random() * currentUnitData.words.length);
+                if (!options.some(opt => opt.english === currentUnitData.words[randIdx].english)) {
+                    options.push(currentUnitData.words[randIdx]);
                 }
             }
             
@@ -675,8 +700,8 @@
             document.getElementById('pictureExercise').style.display = 'block';
             
             // 随机选择一个单词作为答案
-            const randomIndex = Math.floor(Math.random() * unit1Data.words.length);
-            const correctWord = unit1Data.words[randomIndex];
+            const randomIndex = Math.floor(Math.random() * currentUnitData.words.length);
+            const correctWord = currentUnitData.words[randomIndex];
             correctAnswer = correctWord.english;
             currentExerciseType = 'picture';
             
@@ -689,9 +714,9 @@
             
             // 添加其他随机选项
             while (options.length < 4) {
-                const randIdx = Math.floor(Math.random() * unit1Data.words.length);
-                if (!options.some(opt => opt.english === unit1Data.words[randIdx].english)) {
-                    options.push(unit1Data.words[randIdx]);
+                const randIdx = Math.floor(Math.random() * currentUnitData.words.length);
+                if (!options.some(opt => opt.english === currentUnitData.words[randIdx].english)) {
+                    options.push(currentUnitData.words[randIdx]);
                 }
             }
             
@@ -719,7 +744,7 @@
             document.getElementById('sentenceExercise').style.display = 'block';
             
             const sentenceIndex = currentActivity - 12;
-            const sentence = unit1Data.sentences[sentenceIndex];
+            const sentence = currentUnitData.sentences[sentenceIndex];
             document.getElementById('sentenceDisplay').textContent = sentence;
             correctAnswer = sentence.toLowerCase();
             
@@ -745,7 +770,7 @@
                 // 显示正确答案
                 allOptions.forEach(opt => {
                     if (currentExerciseType === 'listen') {
-                        if (unit1Data.words.find(w => w.chinese === opt.querySelector('.option-text').textContent && w.english === correctAnswer)) {
+                        if (currentUnitData.words.find(w => w.chinese === opt.querySelector('.option-text').textContent && w.english === correctAnswer)) {
                             opt.classList.add('correct');
                         }
                     } else if (currentExerciseType === 'picture') {
@@ -904,7 +929,7 @@
             completionCard.innerHTML = `
                 <div style="font-size: 80px; margin-bottom: 20px;">🎉</div>
                 <h2 style="font-size: 36px; color: #333; margin-bottom: 20px;">太棒了！</h2>
-                <p style="font-size: 24px; color: #666; margin-bottom: 30px;">你已经完成了Unit 1的学习！</p>
+                <p style="font-size: 24px; color: #666; margin-bottom: 30px;">你已经完成了Unit ${currentUnitNumber}的学习！</p>
                 <button class="play-sound-btn" onclick="goHome()" style="background: #667eea;">
                     返回主页
                 </button>
