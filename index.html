@@ -90,6 +90,21 @@
             animation: slideIn 0.3s ease-out;
         }
 
+        /* 天气页面样式 */
+        .weather-container {
+            display: none;
+            padding: 20px;
+            min-height: 100vh;
+            animation: slideIn 0.3s ease-out;
+            text-align: center;
+        }
+
+        .weather-info {
+            font-size: 24px;
+            color: #333;
+            margin-top: 40px;
+        }
+
         .header {
             background: rgba(255,255,255,0.95);
             border-radius: 15px;
@@ -436,10 +451,10 @@
                 <div class="unit-description">游戏时间 - 学习运动和活动</div>
             </div>
             
-            <div class="unit-card" onclick="showComingSoon()">
+            <div class="unit-card" onclick="showWeatherPage()">
                 <div class="unit-number">Unit 2</div>
                 <div class="unit-title">Weather</div>
-                <div class="unit-description">天气 - 即将推出</div>
+                <div class="unit-description">查看实时天气</div>
             </div>
 
             <div class="unit-card" onclick="startUnit(3)">
@@ -466,6 +481,15 @@
                 <div class="unit-description">我的一周</div>
             </div>
         </div>
+    </div>
+
+    <!-- 天气页面 -->
+    <div id="weatherPage" class="weather-container">
+        <div class="header">
+            <button class="back-btn" onclick="goHome()">← 返回</button>
+            <div class="progress-info">实时天气</div>
+        </div>
+        <div class="weather-info">正在获取天气信息...</div>
     </div>
 
     <!-- 学习页面 -->
@@ -648,6 +672,7 @@
         function goHome() {
             document.getElementById('homePage').style.display = 'block';
             document.getElementById('learningPage').style.display = 'none';
+            document.getElementById('weatherPage').style.display = 'none';
             
             // 重置状态
             currentActivity = 0;
@@ -660,6 +685,40 @@
         // 显示即将推出提示
         function showComingSoon() {
             alert('🚧 该单元正在开发中，敬请期待！');
+        }
+
+        function showWeatherPage() {
+            document.getElementById('homePage').style.display = 'none';
+            document.getElementById('weatherPage').style.display = 'block';
+            getWeather();
+        }
+
+        function getWeather() {
+            const info = document.querySelector('#weatherPage .weather-info');
+            info.textContent = '正在获取天气信息...';
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(pos => {
+                    const lat = pos.coords.latitude;
+                    const lon = pos.coords.longitude;
+                    fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`)
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.current_weather) {
+                                const w = data.current_weather;
+                                info.textContent = `当前温度：${w.temperature}°C，风速：${w.windspeed}km/h`;
+                            } else {
+                                info.textContent = '无法获取天气信息';
+                            }
+                        })
+                        .catch(() => {
+                            info.textContent = '无法获取天气信息';
+                        });
+                }, () => {
+                    info.textContent = '无法获取定位信息';
+                });
+            } else {
+                info.textContent = '浏览器不支持定位';
+            }
         }
 
         // 隐藏所有学习部分
