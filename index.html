@@ -362,6 +362,182 @@
             cursor: not-allowed;
         }
 
+        /* 顶级编程词汇闪卡区域 */
+        .flashcard-app {
+            background: rgba(255,255,255,0.96);
+            border-radius: 24px;
+            padding: 24px;
+            margin: 0 auto 32px;
+            max-width: 1200px;
+            box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+            text-align: left;
+        }
+
+        .flashcard-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .flashcard-title {
+            font-size: 30px;
+            color: #2d3748;
+            font-weight: 800;
+        }
+
+        .category-toggle {
+            display: flex;
+            gap: 10px;
+        }
+
+        .category-btn {
+            border: 2px solid #667eea;
+            color: #4c51bf;
+            background: #f8fafc;
+            padding: 10px 16px;
+            border-radius: 14px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .category-btn.active {
+            background: #667eea;
+            color: #fff;
+            box-shadow: 0 8px 24px rgba(102,126,234,0.35);
+        }
+
+        .flashcard-body {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 18px;
+        }
+
+        .flashcard-panel {
+            background: #f7fafc;
+            border-radius: 18px;
+            padding: 18px;
+            border: 2px solid #edf2f7;
+            box-shadow: inset 0 0 0 rgba(0,0,0,0);
+        }
+
+        .word-headline {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 28px;
+            font-weight: 800;
+            color: #2b2d42;
+            margin-bottom: 8px;
+        }
+
+        .word-subtitle {
+            color: #718096;
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #e9d8fd;
+            color: #6b46c1;
+            padding: 6px 10px;
+            border-radius: 12px;
+            font-size: 14px;
+            margin-right: 8px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2d3748;
+            margin: 14px 0 8px;
+        }
+
+        .section-text {
+            color: #4a5568;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        .code-block {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 12px;
+            border-radius: 12px;
+            font-family: "Fira Code", "SFMono-Regular", Consolas, monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            border: 1px solid #2d3748;
+        }
+
+        .chip-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .chip {
+            padding: 8px 12px;
+            background: #edf2f7;
+            border-radius: 999px;
+            color: #4a5568;
+            font-weight: 600;
+        }
+
+        .flashcard-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: space-between;
+            margin-top: 16px;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .flash-btn {
+            background: linear-gradient(120deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 16px;
+            border-radius: 14px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 10px 24px rgba(118,75,162,0.35);
+        }
+
+        .flash-btn.secondary {
+            background: #fff;
+            color: #4a5568;
+            border: 2px solid #cbd5e0;
+            box-shadow: none;
+        }
+
+        .flash-progress {
+            font-size: 15px;
+            color: #2d3748;
+            font-weight: 700;
+        }
+
+        .tip-box {
+            background: #fffaf0;
+            border: 2px solid #fbd38d;
+            color: #b7791f;
+            border-radius: 12px;
+            padding: 10px 12px;
+            line-height: 1.5;
+        }
+
         /* 动画 */
         @keyframes fadeIn {
             from { opacity: 0; }
@@ -443,7 +619,63 @@
     <div id="homePage" class="home-container">
         <h1 class="app-title">🌟 奇妙英语世界 🌟</h1>
         <p class="subtitle">小小学霸快学版</p>
-        
+
+        <div class="flashcard-app" id="flashcardApp">
+            <div class="flashcard-header">
+                <div>
+                    <div class="flashcard-title">🧠 顶级编程词汇闪卡</div>
+                    <p class="section-text" style="margin-top: 6px;">为孩子打造的全方位、多模态C1/C2编程词汇库，兼顾词源、生活例句与Python代码实战。</p>
+                </div>
+                <div class="category-toggle">
+                    <button class="category-btn active" id="btnC1" onclick="switchCategory('C1')">C1 基础词汇</button>
+                    <button class="category-btn" id="btnC2" onclick="switchCategory('C2')">C2 进阶词汇</button>
+                </div>
+            </div>
+
+            <div class="flashcard-body">
+                <div class="flashcard-panel">
+                    <div class="word-headline" id="wordHeadline">✨ print</div>
+                    <div class="word-subtitle" id="wordSubtitle">打印；让想法呈现出来</div>
+                    <div class="badge" id="wordBadge">词源·变形</div>
+                    <div class="section-text" id="wordRoot">来自拉丁语premere（压印），引申为把内容“印”出来；变形：printing, printed。</div>
+
+                    <div class="section-title">日常含义 & 例句</div>
+                    <div class="section-text" id="wordDaily">日常含义：印刷、打印、让东西出现。例句：Can you print this photo for me?</div>
+                </div>
+
+                <div class="flashcard-panel">
+                    <div class="section-title">💻 编程含义</div>
+                    <div class="section-text" id="wordCoding">在Python中，print()用于把变量或字符串显示在屏幕上，帮助我们检查程序运行结果。</div>
+
+                    <div class="section-title">📝 Python 示例</div>
+                    <div id="codeExamples">
+                        <pre class="code-block"><code>print("Hello, world!")</code></pre>
+                    </div>
+                </div>
+
+                <div class="flashcard-panel">
+                    <div class="section-title">🔗 相关词汇</div>
+                    <div class="chip-group" id="relatedWords">
+                        <span class="chip">output</span>
+                        <span class="chip">display</span>
+                    </div>
+
+                    <div class="section-title">💡 学习小贴士</div>
+                    <div class="tip-box" id="studyTip">记住：print就像把想说的话贴在屏幕上，调试时多用它观察变量变化。</div>
+                </div>
+            </div>
+
+            <div class="flashcard-actions">
+                <div class="action-buttons">
+                    <button class="flash-btn secondary" onclick="previousFlashcard()">⬅️ 上一个</button>
+                    <button class="flash-btn" onclick="nextFlashcard()">下一个 ➡️</button>
+                    <button class="flash-btn secondary" onclick="shuffleFlashcard()">🎲 随机抽卡</button>
+                    <button class="flash-btn" onclick="speakCurrentWord()">🔊 读给我听</button>
+                </div>
+                <div class="flash-progress" id="flashProgress">1 / 34 · C1 基础词汇</div>
+            </div>
+        </div>
+
         <div class="units-grid">
             <div class="unit-card" onclick="startUnit(1)">
                 <div class="unit-number">Unit 1</div>
@@ -545,6 +777,383 @@
     </div>
 
     <script>
+        // 顶级编程词汇数据与闪卡逻辑
+        const createEntry = (word, translation, root, daily, coding, codes, related, tip) => ({
+            word,
+            translation,
+            root,
+            daily,
+            coding,
+            codes,
+            related,
+            tip
+        });
+
+        const vocabData = {
+            C1: [
+                createEntry('print', '打印；输出', '源自拉丁语premere“压印”→print；变形：printing, printed。', '让内容印出来或显示出来。例句：Can you print this picture?', '在Python中用print()把变量或提示文本输出到屏幕，常用于调试。', [
+                    'message = "Hello"\nprint(message)',
+                    'for i in range(3):\n    print("⭐", i)'
+                ], ['output', 'display', 'show'], '把print想成“给电脑说话的喇叭”，写完代码后多用它检查结果。'),
+                createEntry('value', '数值；价值', '拉丁语valere“强壮”→value；变形：valuable, valuation。', '表示价格或重要性。例句：Honesty has great value.', '在编程中是变量存储的数据本身，可能是数字、字符串或布尔值。', [
+                    'score = 95\nprint("score value:", score)',
+                    'user = {"name": "Amy", "age": 8}\nprint(user.values())'
+                ], ['amount', 'worth', 'data'], '写代码时先想清楚需要什么值，再决定变量名。'),
+                createEntry('speak', '说话；表达', '古英语specan；名词form：speaker, speech。', '开口表达。例句：Please speak slowly.', '可用语音接口或文本转语音库让程序发声，如speechSynthesis。', [
+                    'import pyttsx3\nengine = pyttsx3.init()\nengine.say("Hello")\nengine.runAndWait()',
+                    'def speak_twice(text):\n    print(text)\n    print(text)'
+                ], ['talk', 'say', 'voice'], '练习把注释写得像“对自己说话”，能帮助理清思路。'),
+                createEntry('import', '引入；输入', '拉丁语importare“搬进来”；变形：important, importation。', '把外面的东西带进来。例句：We import fruit from abroad.', '在Python中用import加载库或模块，让现成功能进入当前文件。', [
+                    'import math\nprint(math.sqrt(16))',
+                    'from random import choice\nprint(choice([1,2,3]))'
+                ], ['bring in', 'load', 'include'], '记忆：import像开门让工具包进来，写在文件开头最清晰。'),
+                createEntry('animal', '动物', '拉丁语animalis“有呼吸的”；变形：animate, animation。', '会呼吸、会动的生物。例句：The panda is my favorite animal.', '常用于分类或主题数据，做游戏角色或训练数据标签。', [
+                    'animals = ["cat", "dog", "panda"]\nfor a in animals:\n    print(a.title())',
+                    'pet = {"name": "Coco", "type": "cat"}\nprint(pet["type"])'
+                ], ['creature', 'pet', 'beast'], '编程练习可用动物名单做列表、循环和分类练习。'),
+                createEntry('description', '描述；说明', '拉丁语describere“写下来”；变形：describe, descriptive。', '对事物进行文字说明。例句：Give me a short description of the scene.', '在代码里常是注释、docstring或UI文案，帮助理解模块用途。', [
+                    'def greet(name):\n    """Return a friendly description."""\n    return f"Hello, {name}!"',
+                    'item = {"name": "robot", "description": "A smart helper"}\nprint(item["description"])'
+                ], ['explanation', 'detail', 'note'], '好注释=好描述：写下输入、输出和用途，方便未来维护。'),
+                createEntry('input', '输入', '源自拉丁语in+put“放进去”；变形：inputting。', '把信息放进系统。例句：Type your name as input.', 'Python的input()从键盘读取字符串，也指传入函数的参数或数据流。', [
+                    'name = input("Your name: ")\nprint("Hi", name)',
+                    'def area(width, height):\n    return width * height\nprint(area(3, 4))  # 3和4是输入'
+                ], ['enter', 'feed', 'parameter'], '区分输入和输出，函数写法先想需要的参数列表。'),
+                createEntry('English', '英语', '古英语Englisc；国家相关：England。', '英语语言。例句：I am learning English every day.', '常用作内容语言标记、locale或文本数据处理时的语言识别。', [
+                    'text = "Hello"\nprint(text.isascii())  # 英文字符检测',
+                    'lang = "English"\nif lang == "English":\n    print("Use en_US resources")'
+                ], ['language', 'locale', 'en'], '处理中英文混排时注意编码与字体，避免乱码。'),
+                createEntry('True', '真；正确', '古英语triewe“忠诚的”；对应False。', '表示真实或肯定。例句：The story is true.', 'Python的布尔常量之一，用于条件判断和循环控制。', [
+                    'is_ready = True\nif is_ready:\n    print("Go!")',
+                    'flags = [True, False, True]\nprint(all(flags))'
+                ], ['boolean', 'yes', 'valid'], '布尔变量命名用肯定句，如is_ready、has_data，读起来更顺。'),
+                createEntry('False', '假；错误', '拉丁语falsus“欺骗的”；形容词false。', '表示不真实。例句：The rumor is false.', '布尔常量，条件不满足时为False，常与True配合控制流程。', [
+                    'logged_in = False\nif not logged_in:\n    print("Please log in")',
+                    'print(bool(0))  # False'
+                ], ['wrong', 'no', 'boolean'], '用not、and、or组合逻辑时，先用括号确保清晰优先级。'),
+                createEntry('if', '如果', '古英语gif“给定”；条件连词。', '提出条件。例句：If it rains, we stay inside.', '条件语句起点，用if表达分支逻辑。', [
+                    'age = 10\nif age >= 8:\n    print("Big kid!")',
+                    'if score > 90:\n    result = "A"'
+                ], ['condition', 'when', 'whether'], '写if块时保持缩进整齐，并先处理最常见的条件。'),
+                createEntry('else', '否则', '古英语elles“其他方式”；连词。', '表示其他情况。例句：Finish homework, else no games.', '配合if，当条件不满足执行else中的代码。', [
+                    'if is_sunny:\n    play_outside()\nelse:\n    read_books()',
+                    'if user:\n    print(user)\nelse:\n    print("No user")'
+                ], ['otherwise', 'or', 'alternative'], '保持if/elif/else结构简洁，避免层层嵌套。'),
+                createEntry('virtual character', '虚拟角色', 'virtual“虚拟”+character“角色”；character来自希腊语kharaktēr“刻痕”。', '屏幕里的数字形象。例句：This virtual character can talk.', '在游戏或动画中是对象实例，包含名字、动作、台词等属性。', [
+                    'character = {"name": "Milo", "mood": "happy"}\nprint(character["name"])',
+                    'class Avatar:\n    def speak(self):\n        print("Hello, I am virtual!")'
+                ], ['avatar', 'NPC', 'role'], '给角色设定属性字典，方便扩展动作、场景和台词。'),
+                createEntry('scene', '场景；布景', '希腊语skēnē“舞台布景”；相关：scenery。', '发生故事的地方。例句：The scene is in a park.', '在图形或游戏引擎中代表画面层次或关卡配置。', [
+                    'scene = {"background": "forest", "light": "warm"}\nprint(scene)',
+                    'current_scene = "intro"\nif current_scene == "battle":\n    start_battle()'
+                ], ['stage', 'setting', 'level'], '设计场景时把背景、音效、角色分层存储，方便切换。'),
+                createEntry('actor', '演员；执行者', '拉丁语agere“行动”→actor；变形：act, action。', '在舞台或电影中表演的人。例句：He is a famous actor.', '在模式设计中指执行动作的对象，如游戏角色、机器人实体。', [
+                    'class Actor:\n    def act(self):\n        print("Action!")',
+                    'actors = ["hero", "villain"]\nfor a in actors:\n    print(a)'
+                ], ['performer', 'agent', 'doer'], '把“谁在行动”写清楚，类名或变量名体现角色。'),
+                createEntry('sing', '唱歌', '古英语singan；名词song。', '用声音演唱。例句：She likes to sing loudly.', '可指播放音频或让设备发声，如蜂鸣器播放旋律。', [
+                    'notes = [262, 294, 330]\nfor n in notes:\n    print("Play", n)',
+                    'def sing(text):\n    print(f"🎵 {text}")'
+                ], ['chant', 'song', 'melody'], '给“唱歌”动作配合节奏（节拍）变量，体验循环与延时。'),
+                createEntry('cook', '烹饪', '古英语coc“厨师”；相关：cooker, cookie。', '制作食物。例句：Let’s cook dinner together.', '在编程里可比喻“组合步骤”，也常做游戏任务名称。', [
+                    'def cook(ingredients):\n    for item in ingredients:\n        print("Add", item)',
+                    'recipe = ["egg", "milk", "flour"]\ncook(recipe)'
+                ], ['bake', 'prepare', 'chef'], '把食谱转换成步骤列表，练习顺序执行与函数封装。'),
+                createEntry('action', '动作；行为', '拉丁语agere“做”；相关：activate, actor。', '实际做的事。例句：A smile is a kind action.', '在编程中代表函数调用、事件响应或角色指令。', [
+                    'actions = ["move", "jump", "wave"]\nfor a in actions:\n    print(a)',
+                    'def do_action(name):\n    print(f"Action: {name}")'
+                ], ['move', 'event', 'operation'], '把每个动作封装成函数，组合动作时就像拼积木。'),
+                createEntry('robot', '机器人', '捷克语robota“劳作”；相关：robotic, robotics。', '可以自动工作的机器。例句：The robot cleans the room.', '在代码中是硬件或虚拟代理的抽象，包含传感器、动作接口。', [
+                    'robot = {"name": "Spark", "battery": 90}\nprint(robot["battery"])',
+                    'class Robot:\n    def move(self, steps):\n        print(f"Move {steps} steps")'
+                ], ['bot', 'machine', 'automation'], '先列出机器人能做的API，再写控制逻辑，避免边写边改。'),
+                createEntry('RGBRing', 'RGB灯环', 'RGB代表红绿蓝色光；ring指环形灯板。', '彩色灯环。例句：The RGB ring glows in rainbow colors.', '硬件扩展件，可通过代码设置颜色、亮度和动画效果。', [
+                    'colors = [(255,0,0), (0,255,0), (0,0,255)]\nfor c in colors:\n    print("Set RGB", c)',
+                    'def set_ring(color):\n    print(f"RGB ring -> {color}")'
+                ], ['LED', 'light ring', 'neopixel'], '控制灯环时注意延时与颜色格式(0-255)，可预设主题色列表。'),
+                createEntry('turn on', '打开', 'turn“转向”+on表示开启电路。', '启动电源或设备。例句：Please turn on the light.', '让设备或变量进入工作状态，如打开LED、启动服务。', [
+                    'light_on = True\nprint("Light status:", light_on)',
+                    'def turn_on(device):\n    print(f"Turn on {device}")'
+                ], ['switch on', 'enable', 'start'], '命令式函数命名用动词+对象，如turn_on_light()。'),
+                createEntry('turn off', '关闭', 'turn“转向”+off表示切断。', '停止设备工作。例句：Turn off the TV, please.', '关闭资源或停止循环，如关闭灯、停止马达、释放文件。', [
+                    'def turn_off(device):\n    print(f"Turn off {device}")',
+                    'running = False\nif not running:\n    print("System stopped")'
+                ], ['shut down', 'disable', 'stop'], '关闭前先保存数据或清理资源，避免遗留状态。'),
+                createEntry('time', '时间', '原始日耳曼语tīd“时刻”；相关：timer, timeline。', '时刻或持续长度。例句：What time is it?', '编程中与延时、调度、性能测量相关，可用time模块。', [
+                    'import time\nstart = time.time()\n# do work\nprint(time.time() - start)',
+                    'from datetime import datetime\nprint(datetime.now())'
+                ], ['clock', 'moment', 'duration'], '学会记录开始/结束时间，培养性能意识。'),
+                createEntry('sleep', '睡眠；暂停', '古英语slēpan；相关：sleepy。', '休息或暂停。例句：The cat sleeps on the sofa.', 'time.sleep()用于让程序暂停指定秒数，常用于等待硬件响应。', [
+                    'import time\nprint("3...")\ntime.sleep(1)\nprint("2...")',
+                    'for i in range(3):\n    time.sleep(0.5)\n    print(i)'
+                ], ['pause', 'wait', 'delay'], '在循环里加sleep可防止过度占用CPU，也让输出更易读。'),
+                createEntry('distance', '距离', '拉丁语dis+stare“分开站”；变形：distant, distantly。', '两个点之间的长度。例句：The distance is 5 meters.', '在机器人或传感器项目中常由测距模块返回的数值。', [
+                    'distance_cm = 24.5\nif distance_cm < 30:\n    print("Too close")',
+                    'def is_safe(d):\n    return d > 10'
+                ], ['length', 'range', 'gap'], '记录单位（cm/m）很重要，变量名中加_cm或_m减少混淆。'),
+                createEntry('ultrasonic', '超声波的', 'ultra“超”+sonic“声音的”；相关：ultrasound。', '超过人类可听范围的声音。例句：Bats use ultrasonic waves.', '超声波传感器可测距，常搭配trigger/echo引脚读取时间差。', [
+                    'def read_ultrasonic():\n    return 15.2\nprint(read_ultrasonic())',
+                    'distance = read_ultrasonic()\nif distance < 10:\n    stop_robot()'
+                ], ['sonar', 'echo', 'wave'], '测距时多次取平均值可减少噪声。'),
+                createEntry('sensor', '传感器', '拉丁语sentire“感觉”；相关：sense, sensitive。', '能感知环境的元件。例句：The sensor detects light.', '传感器读数通常是模拟或数字信号，需要校准与阈值判断。', [
+                    'sensor_value = 512\nif sensor_value > 300:\n    print("Bright")',
+                    'def read_sensor():\n    return 0.75\nprint(read_sensor())'
+                ], ['detector', 'probe', 'meter'], '读取前先写好单位与范围说明，便于调试。'),
+                createEntry('Servo', '舵机', '源自拉丁语servus“仆人”，表示被控制的小型马达。', '可精确转动角度的电机。例句：The servo moves the robot arm.', '在代码中通过PWM控制角度，常用0~180度。', [
+                    'servo_angle = 90\nprint(f"Servo -> {servo_angle}°")',
+                    'def turn_servo(angle):\n    print(f"Set servo to {angle} degrees")'
+                ], ['servo motor', 'pwm', 'arm'], '限制角度范围避免卡死；先归零再执行复杂动作。'),
+                createEntry('turn to', '转向；朝向', 'turn“转动”+to指目标方向。', '身体或物体朝某方向。例句：Turn to the left.', '控制舵机或机器人面向某角度/坐标。', [
+                    'direction = "north"\nprint("Turn to", direction)',
+                    'def turn_to(angle):\n    print(f"Turn to {angle}°")'
+                ], ['face', 'rotate', 'aim'], '写转向函数时区分绝对角度和相对角度，命名清晰。'),
+                createEntry('degree', '度数；程度', '拉丁语gradus“步”；数学角度单位。', '温度或角度单位。例句：It is 30 degrees today.', '控制舵机或三角运算时常用，注意°转弧度：math.radians。', [
+                    'import math\nprint(math.radians(90))',
+                    'angle = 45\nif angle > 180:\n    angle -= 360'
+                ], ['angle', 'level', 'grade'], '写明单位：angle_deg或angle_rad，防止混用。'),
+                createEntry('motor', '马达', '拉丁语movēre“移动”；相关：motion。', '能让设备运动的机器。例句：The motor spins fast.', '通过电压或PWM控制转速方向，是机器人驱动核心。', [
+                    'speed = 120\nprint(f"Motor speed {speed} RPM")',
+                    'def run_motor(power):\n    print(f"Power: {power}")'
+                ], ['engine', 'drive', 'gear'], '设置最大/最小功率防烧机，加入停止函数确保安全。'),
+                createEntry('run', '运行；奔跑', '古英语rinnan“流动”；过去式ran。', '快速移动；运转。例句：He can run very fast.', '指程序或进程的执行，也可指马达/脚本运行。', [
+                    'def run_task():\n    print("Task running")\nrun_task()',
+                    'for i in range(3):\n    print("Robot run step", i)'
+                ], ['execute', 'start', 'operate'], '区分“编译时”和“运行时”问题，调试更高效。'),
+                createEntry('Infrared Radiation', '红外线', 'infra“低于”+red“红色”；radiation指辐射。', '波长比可见光长的光线。例句：Remote controls use infrared radiation.', '红外传感器用于避障、遥控接收，通常读取高低电平。', [
+                    'ir_signal = True\nif ir_signal:\n    print("Infrared detected")',
+                    'def read_ir():\n    return 0 or 1'
+                ], ['IR', 'remote', 'beam'], '遥控协议可先使用库，避免自己解析脉冲。'),
+                createEntry('brightness', '亮度', 'bright“明亮”+ness名词化。', '光的强弱。例句：Increase the screen brightness.', '在图形或灯光控制中是0-1或0-255的数值。', [
+                    'brightness = 180\nprint("LED brightness", brightness)',
+                    'screen = {"brightness": 0.8}\nprint(screen["brightness"])'
+                ], ['lightness', 'intensity', 'glow'], '把亮度映射到百分比显示，孩子更容易理解。'),
+                createEntry('light', '光；灯', '古英语lēoht；形容词light“轻”；此处为光亮。', '照明或光线。例句：Turn off the light at night.', '常指LED、环境光传感器或光线效果。', [
+                    'light_on = True\nprint("Light on?", light_on)',
+                    'def set_light(level):\n    print(f"Light level {level}")'
+                ], ['lamp', 'brightness', 'illumination'], '使用逻辑变量light_on配合亮度数值更易控制。'),
+                createEntry('receiver', '接收器', 'receive“接收”+er；相关：receive, reception。', '接收信号的装置。例句：The radio receiver is small.', '在硬件中接收红外、无线或蓝牙信号的模块。', [
+                    'signal = receiver.read() if "receiver" in globals() else None\nprint(signal)',
+                    'def handle_receive(msg):\n    print("Got:", msg)'
+                ], ['listener', 'antenna', 'module'], '接收与发送要配对好频率和协议，调试时先打印原始数据。'),
+                createEntry('artificial intelligence', '人工智能', 'artificial“人造的”+intelligence“智慧”；缩写AI。', '让机器像人一样思考。例句：Artificial intelligence can recognize voices.', '在编程里涵盖机器学习、感知和决策，可调用云端或本地模型。', [
+                    'import random\nprint("AI guess:", random.choice(["yes", "no"]))',
+                    'def simple_ai(question):\n    return "Let me think..."\nprint(simple_ai("Hi"))'
+                ], ['AI', 'machine learning', 'smart'], '从“小任务”入手，如分类或推荐，让孩子看到AI的具体作用。')
+            ],
+            C2: [
+                createEntry('waste', '浪费；废物', '古英语wāst“荒芜”；动词waste。', '不必要的消耗。例句：Don’t waste food.', '代码中指无效计算或多余内存，可通过优化减少浪费。', [
+                    'items = [1,2,3]\nif not items:\n    print("Avoid waste loops")',
+                    'def remove_waste(data):\n    return [x for x in data if x is not None]'
+                ], ['lose', 'save', 'reuse'], '写循环前先估计复杂度，避免无谓重复。'),
+                createEntry('check', '检查；核对', '古法语eschequier“棋盘”；引申为对照。', '查看是否正确。例句：Check your homework.', '在代码里是条件验证、断言或测试。', [
+                    'def check_age(age):\n    assert age > 0\n    return True',
+                    'if password == "1234":\n    print("Check passed")'
+                ], ['verify', 'inspect', 'test'], '多写自测函数check_xx，能更早发现问题。'),
+                createEntry('compare', '比较', '拉丁语comparare“放在一起”；变形：comparison。', '找出差异或相同。例句：Compare the two photos.', '使用==、>,<或自定义排序函数比较数据。', [
+                    'print(5 > 3)',
+                    'names = ["Amy", "Bob"]\nprint(sorted(names))'
+                ], ['contrast', 'match', 'sort'], '比较字符串时可统一大小写，避免误差。'),
+                createEntry('face', '面向；脸', '拉丁语facies“面容”；动词face。', '脸或面对。例句：Face the camera, please.', '在机器人中指朝向，在计算机视觉中指人脸检测。', [
+                    'direction = "north"\nprint("Face", direction)',
+                    '# 伪代码：camera.detect_face()'
+                ], ['front', 'turn to', 'deal with'], '面向对象编程强调“面对”问题抽象出类。'),
+                createEntry('random', '随机的', '法语au hasard“机会”；数学随机。', '没有固定规律。例句：Pick a random card.', 'random模块生成随机数、随机选择元素。', [
+                    'import random\nprint(random.randint(1, 6))',
+                    'cards = ["A", "K", "Q"]\nprint(random.choice(cards))'
+                ], ['chance', 'shuffle', 'unpredictable'], '随机种子控制结果复现：random.seed(42)。'),
+                createEntry('number', '数字', '拉丁语numerus；相关：numerical。', '表示数量的符号。例句：Write down the number.', '整数、浮点是基础数据类型，可参与计算与索引。', [
+                    'n = 7\nprint(n + 3)',
+                    'for i in range(5):\n    print(i)'
+                ], ['digit', 'figure', 'count'], '存储和显示时注意整型/浮点区别，舍入用round。'),
+                createEntry('break', '打断；休息', '古英语brecan“折断”；名词break。', '停止或休息。例句：Take a short break.', '循环里的break立即跳出，也可指代码出错中断。', [
+                    'for i in range(10):\n    if i == 3:\n        break\n    print(i)',
+                    'while True:\n    break'
+                ], ['stop', 'pause', 'exit'], '使用break前设定退出条件，避免死循环。'),
+                createEntry('show', '显示；展示', '古英语scēawian“观看”；变形：showing。', '让别人看到。例句：Show me your drawing.', '在UI或终端输出信息，可结合print或图形界面。', [
+                    'def show_message(text):\n    print(f"[SHOW] {text}")',
+                    'show_message("Mission complete")'
+                ], ['display', 'present', 'reveal'], '输出信息尽量简洁带标签，便于阅读。'),
+                createEntry('text', '文本', '拉丁语textus“编织”；相关：texture。', '文字内容。例句：Type the text here.', '字符串数据类型，支持切片、拼接和编码处理。', [
+                    'text = "hello"\nprint(text.upper())',
+                    'print("Length:", len(text))'
+                ], ['string', 'words', 'content'], '保持统一编码utf-8，处理前strip去除空白。'),
+                createEntry('button', '按钮', '法语bouton“纽扣”；引申为按键。', '可按下的控制件。例句：Press the start button.', '在GUI或网页中触发事件的控件，需要绑定点击回调。', [
+                    'def on_click():\n    print("Clicked")',
+                    '# tkinter.Button(root, text="Go", command=on_click)'
+                ], ['key', 'switch', 'control'], '命名按钮事件用动词：on_start_click()。'),
+                createEntry('is', '是', '古英语is动词be的形式。', '表示身份或状态。例句：She is happy.', '在条件表达式中判断相等或类型，如is用于对象身份比较。', [
+                    'x = None\nprint(x is None)',
+                    'print(type(5) is int)'
+                ], ['be', 'equals', 'state'], '注意Python中==比较值，is比较对象身份。'),
+                createEntry('password', '密码', 'pass“通过”+word“词语”；', '用来保护账户的秘密词。例句：Keep your password safe.', '字符串验证，需加密存储；输入后与哈希比对。', [
+                    'pwd = "123456"\nprint(len(pwd) >= 6)',
+                    'def check_password(pwd):\n    return pwd == "secret"'
+                ], ['passcode', 'pin', 'key'], '不要把真实密码写进代码，使用环境变量或配置文件。'),
+                createEntry('list', '列表；清单', '日耳曼语listam“边缘”；变形：listing。', '有序的项目集合。例句：Make a shopping list.', 'Python的list是可变序列，支持追加、删除和切片。', [
+                    'nums = [1, 2, 3]\nnums.append(4)',
+                    'for item in ["a", "b"]:\n    print(item)'
+                ], ['array', 'sequence', 'collection'], '初始化列表用[]最清晰，避免可变默认参数。'),
+                createEntry('append', '追加', '拉丁语appendere“挂上”；', '在后面添加。例句：Append your signature.', 'list.append()在末尾插入元素。', [
+                    'nums = []\nnums.append(5)\nprint(nums)',
+                    'words = ["hi"]\nwords.append("there")'
+                ], ['add', 'attach', 'push'], 'append是原地操作，返回None，别误用赋值。'),
+                createEntry('remove', '移除', '拉丁语removere“移开”；', '拿走某物。例句：Remove the sticker.', 'list.remove(x)删除第一次出现的元素；pop按索引删除并返回。', [
+                    'nums = [1,2,3]\nnums.remove(2)',
+                    'letters = ["a","b","c"]\nletters.pop(0)'
+                ], ['delete', 'pop', 'erase'], '删除前可先判断是否存在，避免ValueError。'),
+                createEntry('length', '长度', '古英语lengðu；', '物体的长短。例句：The length is 10 cm.', 'len()返回序列或集合的元素数量。', [
+                    'name = "Python"\nprint(len(name))',
+                    'data = [1,2,3]\nif len(data) > 0:\n    print("not empty")'
+                ], ['size', 'distance', 'height'], '检查长度常用于空值判断，比==[]更简洁。'),
+                createEntry('sound', '声音', '拉丁语sonus；', '听得到的振动。例句：The bell makes a loud sound.', '处理音频数据、播放提示音或检测麦克风输入。', [
+                    'sound_enabled = True\nif sound_enabled:\n    print("🔊")',
+                    '# playsound("ding.mp3")'
+                ], ['audio', 'noise', 'voice'], '控制音量和播放次数，避免噪声干扰。'),
+                createEntry('play', '播放；玩', '古英语plegian；', '玩耍或演奏。例句：Let’s play music.', '播放音频/视频或运行游戏动作。', [
+                    'playlist = ["do", "re", "mi"]\nfor note in playlist:\n    print("Play", note)',
+                    'def play_sound(name):\n    print(f"Play {name}")'
+                ], ['perform', 'run', 'start'], '播放前准备资源路径，避免文件找不到。'),
+                createEntry('loudness', '响度', 'loud“响亮”+ness。', '声音的强弱。例句：Reduce the loudness.', '音频处理中是分贝值或0-1的增益。', [
+                    'volume = 0.6\nprint("Loudness:", volume)',
+                    'if volume > 0.8:\n    print("Too loud")'
+                ], ['volume', 'intensity', 'gain'], '给音量设置安全上限，保护耳朵和设备。'),
+                createEntry('music', '音乐', '希腊语mousike“缪斯的艺术”；', '有节奏的声音组合。例句：Music makes me happy.', '处理播放列表、节拍或音乐可视化。', [
+                    'tracks = ["song1", "song2"]\nfor t in tracks:\n    print("Play", t)',
+                    'beat = 120\nprint(f"BPM: {beat}")'
+                ], ['melody', 'song', 'tune'], '用节拍器概念理解循环间隔：60s/ BPM。'),
+                createEntry('choice', '选择', '法语choisir；', '从多个里挑一个。例句：Make your choice.', 'random.choice从序列中随机取值；也用于菜单选择。', [
+                    'import random\nprint(random.choice(["red", "blue"]))',
+                    'options = {"a":1, "b":2}\nprint(options.get("a"))'
+                ], ['pick', 'option', 'select'], '提供默认值（如dict.get）避免KeyError。'),
+                createEntry('dictionary', '字典；映射', '中世纪拉丁语dictionarium；', '收录词语与释义的书。例句：Use a dictionary to find the word.', 'Python的dict存键值对，适合存配置、映射关系。', [
+                    'user = {"name": "Ada", "age": 9}\nprint(user["name"])',
+                    'scores = {}\nscores["math"] = 95'
+                ], ['map', 'hash', 'object'], '键用小写蛇形更统一，例如user_name。'),
+                createEntry('pick', '挑选', '中世纪英语picken；', '挑出喜欢的。例句：Pick your favorite color.', '与choice类似，从集合中选取元素或文件。', [
+                    'def pick_first(items):\n    return items[0]',
+                    'colors = ["red", "green"]\nprint(pick_first(colors))'
+                ], ['choose', 'select', 'take'], '封装选择逻辑，便于替换策略（随机/最优）。'),
+                createEntry('message', '消息；信息', '拉丁语missus“送出”；', '传递的信息。例句：Send me a message.', '在程序中是事件、日志或网络数据包。', [
+                    'msg = "Hello"\nprint(f"Message: {msg}")',
+                    'def send(msg):\n    print("Sending", msg)'
+                ], ['note', 'signal', 'notification'], '写清消息格式(JSON/文本)，发送和接收双方一致。'),
+                createEntry('name', '名字；命名', '古英语nama；', '标识一个人或物。例句：My name is Lily.', '变量、函数、文件的标识符，命名关乎可读性。', [
+                    'project_name = "FlashCards"\nprint(project_name)',
+                    'def rename(file, new):\n    print(file, "->", new)'
+                ], ['title', 'label', 'identifier'], '用有意义的名字代替a1、b2，读代码像读故事。'),
+                createEntry('multi', '多个；多重', '拉丁语multi“多”；', '表示很多或多重。例句：This toy has multiple modes.', '常见于multimedia、multithread等前缀，表示并行或多样性。', [
+                    'modes = ["study", "play", "rest"]\nprint("multi modes", modes)',
+                    'def combine_multi(items):\n    return " & ".join(items)'
+                ], ['many', 'several', 'multiple'], '看到multi要考虑资源同步问题，如多线程锁。'),
+                createEntry('sum', '总和', '拉丁语summa“总数”；', '把数加起来的结果。例句：Find the sum of 2 and 3.', 'sum()快速求列表数值之和，也可用循环累加。', [
+                    'print(sum([1, 2, 3]))',
+                    'total = 0\nfor n in [1,2,3]:\n    total += n\nprint(total)'
+                ], ['total', 'add', 'aggregate'], '数字累加前初始化为0，类型保持一致。'),
+                createEntry('gyro', '陀螺仪', '希腊语gyros“圆圈”；', '测量角速度的传感器。例句：The drone uses a gyro to stay stable.', '硬件接口返回x/y/z角速度，用于姿态控制。', [
+                    'gyro = {"x":0.01, "y":0.02, "z":0.0}\nprint(gyro)',
+                    'def is_stable(g):\n    return abs(g["x"]) < 0.1'
+                ], ['gyroscope', 'imu', 'tilt'], '读取陀螺仪时常需滤波，结合加速度计更稳。'),
+                createEntry('state', '状态', '拉丁语status“站立”；', '当前情况。例句：The machine is in a safe state.', '在程序中表示变量的当前值或系统模式。', [
+                    'state = "idle"\nif state == "idle":\n    print("waiting")',
+                    'robot = {"state": "run"}\nprint(robot["state"])'
+                ], ['status', 'mode', 'condition'], '状态机设计：列出所有状态与转移条件，避免混乱。'),
+                createEntry('info', '信息', 'information缩写，拉丁语informare。', '资料或消息。例句：Give me more info.', '在日志或接口返回中常用info字段。', [
+                    'info = {"version": "1.0"}\nprint(info)',
+                    'def log_info(msg):\n    print("[INFO]", msg)'
+                ], ['information', 'data', 'detail'], '日志分级info/warn/error，便于排查。'),
+                createEntry('file', '文件', '拉丁语filum“线”；', '保存数据的容器。例句：Open the file, please.', '在编程中进行读取/写入，注意路径与编码。', [
+                    'with open("demo.txt", "w") as f:\n    f.write("Hi")',
+                    'with open("demo.txt") as f:\n    print(f.read())'
+                ], ['document', 'record', 'data'], '使用with确保文件关闭，路径用os.path.join。'),
+                createEntry('food', '食物', '古英语fōda；', '可吃的东西。例句：Pasta is my favorite food.', '常用作示例数据集或分类标签。', [
+                    'foods = ["apple", "bread"]\nfor f in foods:\n    print(f)',
+                    'def pick_food(menu):\n    return menu[0]'
+                ], ['meal', 'dish', 'snack'], '用美食做例子更有趣，如“菜单列表”“点餐函数”。'),
+                createEntry('define', '定义；说明', '拉丁语definire“划定界限”；', '清楚地说明含义。例句：Define the rules.', '使用def定义函数；也指给常量、协议下定义。', [
+                    'def define_rule(name):\n    print(f"Rule: {name}")',
+                    'PI = 3.14  # define constant'
+                ], ['state', 'set', 'explain'], '写定义时包括输入、输出和限制条件。'),
+                createEntry('return', '返回；回报', '古法语retorner“转回”；', '回到原处或把东西还回。例句：Return home early.', '函数的return语句把结果交还给调用者。', [
+                    'def add(a, b):\n    return a + b\nprint(add(2, 3))',
+                    'def check(x):\n    if x:\n        return True\n    return False'
+                ], ['give back', 'result', 'output'], '函数早返回（guard clause）能减少嵌套，让逻辑更清晰。')
+            ]
+        };
+
+        let currentCategory = 'C1';
+        let currentFlashIndex = 0;
+
+        function renderFlashcard() {
+            const list = vocabData[currentCategory];
+            const item = list[currentFlashIndex];
+            document.getElementById('wordHeadline').textContent = `✨ ${item.word}`;
+            document.getElementById('wordSubtitle').textContent = `${item.translation}；一眼掌握核心含义`;
+            document.getElementById('wordBadge').textContent = '词源·变形';
+            document.getElementById('wordRoot').textContent = item.root;
+            document.getElementById('wordDaily').textContent = item.daily;
+            document.getElementById('wordCoding').textContent = item.coding;
+
+            const codeContainer = document.getElementById('codeExamples');
+            codeContainer.innerHTML = '';
+            item.codes.forEach(snippet => {
+                const pre = document.createElement('pre');
+                pre.className = 'code-block';
+                const code = document.createElement('code');
+                code.textContent = snippet;
+                pre.appendChild(code);
+                codeContainer.appendChild(pre);
+            });
+
+            const relatedContainer = document.getElementById('relatedWords');
+            relatedContainer.innerHTML = '';
+            item.related.forEach(word => {
+                const span = document.createElement('span');
+                span.className = 'chip';
+                span.textContent = word;
+                relatedContainer.appendChild(span);
+            });
+
+            document.getElementById('studyTip').textContent = item.tip;
+            document.getElementById('flashProgress').textContent = `${currentFlashIndex + 1} / ${list.length} · ${currentCategory} ${currentCategory === 'C1' ? '基础词汇' : '进阶词汇'}`;
+        }
+
+        function switchCategory(cat) {
+            currentCategory = cat;
+            currentFlashIndex = 0;
+            document.getElementById('btnC1').classList.toggle('active', cat === 'C1');
+            document.getElementById('btnC2').classList.toggle('active', cat === 'C2');
+            renderFlashcard();
+        }
+
+        function nextFlashcard() {
+            const list = vocabData[currentCategory];
+            currentFlashIndex = (currentFlashIndex + 1) % list.length;
+            renderFlashcard();
+        }
+
+        function previousFlashcard() {
+            const list = vocabData[currentCategory];
+            currentFlashIndex = (currentFlashIndex - 1 + list.length) % list.length;
+            renderFlashcard();
+        }
+
+        function shuffleFlashcard() {
+            const list = vocabData[currentCategory];
+            currentFlashIndex = Math.floor(Math.random() * list.length);
+            renderFlashcard();
+        }
+
+        function speakCurrentWord() {
+            const item = vocabData[currentCategory][currentFlashIndex];
+            if ('speechSynthesis' in window) {
+                const utter = new SpeechSynthesisUtterance(item.word);
+                utter.lang = 'en-US';
+                utter.rate = 0.9;
+                utter.pitch = 1.1;
+                window.speechSynthesis.speak(utter);
+            }
+        }
+
         // 数据定义
         const unit1Data = {
             words: [
@@ -1065,12 +1674,15 @@
             if (!('speechSynthesis' in window)) {
                 console.warn('您的浏览器不支持语音合成');
             }
-            
+
             // 预加载语音
             if ('speechSynthesis' in window) {
                 const preloadVoice = new SpeechSynthesisUtterance('');
                 window.speechSynthesis.speak(preloadVoice);
             }
+
+            // 渲染默认闪卡
+            renderFlashcard();
         }
 
         // 防止iOS Safari的橡皮筋效果
